@@ -1,0 +1,47 @@
+= RubyProfRequestFilters
+Output ruby prof results to your browser for the specified request when the url includes parameter <tt>ruby_prof=true</tt>
+  http://localhost:3000/?ruby_prof=true
+
+== Install
+  script/plugin install http://github.com/blythedunham/ruby_prof_request_filters
+
+== Usage
+Include +RubyProfRequestFilters+ in the controller. Return false from +ruby_prof_filters_enabled?+
+to dynamically use ruby prof
+  class ApplicationController < ActionView::Base
+    include RubyProfRequestFilters
+    
+    def ruby_prof_filters_enabled?; !Rails.env.production?; end
+  end
+
+== Options
+The following parameters can be specified on the url
+
+=== +ruby_prof_graph+
+* +flat+ a flat text graph
+* +graph+ text graphed results
+* +graph_html+ (default) graphed results in html
+
+===+ruby_prof_measure+ 
+Specify which type of measurement to use. Some options involve additional configuration
+* process_time (default)
+* wall_time
+* cpu_time
+* allocations
+* memory
+* gc_runs
+* gc_time
+
+Example:
+  http://localhost:3000/?ruby_prof=true&ruby_prof_measure=memory
+These are explained in depth on the rubyprof website: http://ruby-prof.rubyforge.org
+
+=== Developers
+* Blythe Dunham http://snowgiraffe.com
+
+=== Homepage
+* Github Project: http://github.com/blythedunham/ruby_prof_request_filters/tree/master
+* Install:  <tt>script/plugin install git://github.com/blythedunham/ruby_prof_request_filters</tt>
+
+
+Copyright (c) 2009 snowgiraffe, released under the MIT license
